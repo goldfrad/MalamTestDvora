@@ -1,0 +1,58 @@
+<div class="information-concentration">
+    <div class="bar">ריכוז מידע בתהליך</div>
+    <div class="content">
+        <b>פרטי מבוטח:</b>
+        <div class="inshured-details">
+            <div>שם: {{insured.firstName}} {{insured.lastName}}</div>
+            <div>ת"ז: {{insured.identity}}</div>
+            <div>גיל: {{insured.age}}</div>
+            <div>כתובת: {{insured.address.streetName}}, {{insured.address.cityName}}</div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <label for="scy">סוג תביעת על:</label>
+                <select class="form-control" id="scy" required [(ngModel)]="superClaim.superClaimType" name="scy">
+                    <option *ngFor="let scy of superClaimType" [value]="scy.code">{{scy.value}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="ed">תאריך אירוע</label>
+                <input type="date" class="form-control" id="ed" [(ngModel)]="superClaim.eventDate" name="ed"
+                    #eventDate="ngModel" required>
+                <div [hidden]="eventDate.valid || eventDate.pristine" class="alert alert-danger">
+                    תאריך אירוע הינו שדה חובה
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="cc">סיבת אירוע:</label>
+                <select class="form-control" id="cc" required [(ngModel)]="superClaim.claimCause" name="cc">
+                    <option *ngFor="let cc of claimCause" [value]="cc.code">{{cc.value}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="it">מהות האירוע:</label>
+                <select class="form-control" id="it" [(ngModel)]="superClaim.injuryType" name="it" required
+                    [disabled]="!superClaim.claimCause">
+                    <option *ngFor="let it of injuryType" [value]="it.code">{{it.value}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="sb">תביעה הוגשה באמצעות:</label>
+                <select class="form-control" id="sb" required [(ngModel)]="superClaim.submitedBy" name="sb">
+                    <option *ngFor="let sb of identityTypes" [value]="sb.code">{{sb.value}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="sm">אופן קבלת התביעה:</label>
+                <select class="form-control" id="sm" [(ngModel)]="superClaim.submitionMethod" name="sm">
+                    <option *ngFor="let sm of submitionMethod" [value]="sm.code">{{sm.value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

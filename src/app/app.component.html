@@ -1,0 +1,17 @@
+<div class="claim-form">
+  <div class="header">
+    <div>תביעת על: {{superClaim.superClaimNum}}</div>
+    <div> מצב תביעה: {{superClaim.superClaimStatus.value}}</div>
+    <button class="btn btn-primary refresh-process" (click)="onResetForm()">רענון תהליך</button>
+
+  </div>
+  <form #processForm="ngForm">
+    <app-information-concentration [insured]="insured" ngModelGroup="informationConcentration" [superClaim]="superClaim"></app-information-concentration>
+    <app-contacts-concentration [contactPersons]="contactPersons" [insured]="insured"(clearContacts)="clearContacts($event)"></app-contacts-concentration>
+    <app-contacts [contactPersons]="contactPersons" ngModelGroup="contacts" (updateContactPersons)="updateContactPersons($event)"></app-contacts>
+  </form>
+  <div class="footer">
+    <button class="btn btn-primary refresh-process" [disabled]="!isFormValid()" (click)="continue()">המשך</button>
+  </div>
+
+</div>

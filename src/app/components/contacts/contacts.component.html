@@ -1,0 +1,72 @@
+<div class="contacts">
+    <div class="bar">אנשי קשר</div>
+    <div class="content">
+       <form #contactForm="ngForm">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>מועדף</th>
+                        <th>שם איש קשר</th>
+                        <th>סוג</th>
+                        <th>כתובת</th>
+                        <th>טלפון</th>
+                        <th>דוא"ל</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contactPerson of contactPersons; let i = index">
+                        <td>
+                            <input type="checkbox" [checked]="contactPerson.deliveryFlag" [name]="'dfcb'+i" [(ngModel)]="contactPerson.deliveryFlag" (change)="onDeliveryFlagChaned()"><!--   -->
+                        </td>
+                        <td >
+                            {{contactPerson.name}} 
+                        </td>
+                        <td>
+                            {{contactPerson.type?contactPerson.type.value:''}}
+                        </td>
+                        <td>
+                            {{contactPerson.address}}
+                        </td>
+                        <td>
+                            {{contactPerson.phoneNumber | PhoneFormat}}
+                        </td>
+                        <td>
+                            {{contactPerson.email}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isAddContact">
+
+                        <td class="form-group">
+                            <input [(ngModel)]="newContactPerson.deliveryFlag" name="cfdv" id="cfdv" type="checkbox" />
+                        </td>
+                        <td class="form-group">
+                            <input [(ngModel)]="newContactPerson.name" class="form-control" type="text" name="cfn" id="cfn" required
+                                [pattern]="onlyHebrewPattern" />
+                        </td>
+                        <td class="form-group">
+                            <select class="form-control" [(ngModel)]="contactPersonType" name="cfcp" id="cfcp" required>
+                                <option *ngFor="let cpt of contactPersonTypes" [value]="cpt.code">{{cpt.value}}</option>
+                            </select>
+                        </td>
+                        <td class="form-group">
+                            <input [(ngModel)]="newContactPerson.address" class="form-control" type="text" name="cfa" id="cfa" />
+                        </td>
+                        <td class="form-group">
+                            <input [(ngModel)]="newContactPerson.phoneNumber" class="form-control" type="text" name="cfnu" id="cfnu" required maxlength="9" minlength="9" pattern="^((\\+91-?)|0)?[0-9]{9}$"/>
+                        </td>
+                        <td class="form-group">
+                            <input [(ngModel)]="newContactPerson.email" class="form-control" type="email" name="cfe" id="cfe" email="true"/>
+                        </td>
+                        <td class="form-group">
+                            <button class="btn btn-default" type="button" (click)="addNewContact()" [disabled]="contactForm.status=='INVALID'||!contactPersonType">+</button>
+                        </td>
+
+                    </tr>
+
+                    <button class="btn btn-default" (click)="addContactPersonRow()">הוסף איש קשר</button>
+
+                </tbody>
+            </table>
+       </form>
+    </div>
+</div>
